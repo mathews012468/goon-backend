@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-from . import translateAcronym as ta
+import translateAcronym as ta
 
 app = Flask(__name__)
 
