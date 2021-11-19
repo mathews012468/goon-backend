@@ -1,6 +1,20 @@
 import requests
 from bs4 import BeautifulSoup
 
+def longestSubstringFinder(string1, string2):
+    answer = ""
+    len1, len2 = len(string1), len(string2)
+    for i in range(len1):
+        for j in range(len2):
+            lcs_temp=0
+            match=''
+            while ((i+lcs_temp < len1) and (j+lcs_temp<len2) and string1[i+lcs_temp] == string2[j+lcs_temp]):
+                match += string2[j+lcs_temp]
+                lcs_temp+=1
+            if (len(match) > len(answer)):
+                answer = match
+    return answer
+
 def longestCommonSubsequence(X,Y):
   return lcsubsequence(X,Y,len(X),len(Y))
 
@@ -68,28 +82,24 @@ def defineGoonAcronym(acronym):
 
   #get list of all current words in the goontionary:
   url = "https://docs.google.com/document/d/e/2PACX-1vRQpuBXtQUGrGXcMzIhpZRuNCfNyj-pNv39u8KLCg1uR3yIe9oT6ZEVF0e4jnkrHl-UC0ujPFqNXf_p/pub"
-  soup = BeautifulSoup(requests.get(url).content, "html.parser")
+  soup = BeautifulSoup(requests.get(url).content, "lxml")
   wordsAndDefinitions = []
   for string in soup.find("div", attrs={"id":"contents"}).div.children:
-    if string.text != "":
-      wordsAndDefinitions.append( getWordAndDefinition( string.text ) )
+    wordsAndDefinitions.append( getWordAndDefinition( string.text ) )
 
-  #this will have the length of the longest common subsequence
-  lengthOfLongest = 0
+  #I try to find the max sum of the longest common subsequence and substring (this favors consecutive letters)
+  similarityScore = 0
   lcsList = []
   #for each word, check the longest common subsequence
   for wad in wordsAndDefinitions:
     lcs = longestCommonSubsequence(acronym.upper(), wad["word"].upper())
-    if lcs is None:
+    lcs2 = longestSubstringFinder(acronym.upper(), wad["word"].upper())
+    if lcs is None or lcs2 is None:
       continue
-    elif len(lcs) > lengthOfLongest:
-      lengthOfLongest = len(lcs)
+    elif len(lcs) + len(lcs2) > similarityScore:
+      similarityScore = len(lcs) + len(lcs2)
       lcsList = [{"goon word": wad["word"], "goon definition": wad["definition"], "lcs": lcs}]
-    elif len(lcs) == lengthOfLongest:
+    elif len(lcs) + len(lcs2) ==  similarityScore:
       lcsList.append({"goon word": wad["word"], "goon definition": wad["definition"], "lcs": lcs})
 
   return lcsList
-
-if __name__ == "__main__":
-    goonanym = input("Enter a goon acronym to be defined: ")
-    print( defineGoonAcronym(goonanym) )
