@@ -1,10 +1,37 @@
-<form action="/translate">
-    <label>Acronym to be decoded:</label><br></br>
-    <input id="acronym" name="acronym" type="text"></input>
-    <input type="submit" value="Dechode"></input>
-</form>
-<div id="definitions">
-    {% for acronym in acronyms %}
-    <li>{{ acronym["goon definition"] }}</li>
-    {% endfor %}
+<style>
+    #container {
+        width: 90vw;
+    }
+
+    form {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #acronym-submit {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #acronym {
+        width: 90%;
+        max-width: 300px;
+    }
+</style>
+<div id="container">
+    <form action="/translate">
+        <label>Acronym to be decoded:</label><br></br>
+        <div id="acronym-submit">
+            <input id="acronym" name="acronym" type="text"></input>
+            <input type="submit" value="Dechode"></input>
+        </div>
+    </form>
+    <div id="definitions">
+        {% for acronym in acronyms %}
+        <li>{{ acronym["goon definition"] }}</li>
+        {% endfor %}
+    </div>
 </div>
