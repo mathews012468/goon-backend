@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=["GET"])
 def entry():
-    return render_template("index.html")
+    return render_template("index.html", acronyms=[])
 
 @app.route('/hello')
 def a():
@@ -21,5 +21,5 @@ def translate():
     goonAcronymDefined = ta.defineGoonAcronym(goonAcronym)
 
     #restrict to the first ten results
-    goonAcronymDefinitionsList = goonAcronymDefined[:10]
-    return {"Definitions": [goonWord["goon definition"] for goonWord in goonAcronymDefinitionsList]}
+    goonAcronymDefinitions = goonAcronymDefined[:10]
+    return render_template("index.html", acronyms=goonAcronymDefinitions)

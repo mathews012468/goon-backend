@@ -1,14 +1,10 @@
-<form>
+<form action="/translate">
     <label>Acronym to be decoded:</label><br></br>
-    <input id="acronym" type="text"></input>
+    <input id="acronym" name="acronym" type="text"></input>
+    <input type="submit" value="Dechode"></input>
 </form>
-<button id="executeOrder66" onClick="myFunction()"> do it </button>
-<div id="definitions"></div>
-<script>
-function myFunction() {
-    console.log(`/translate?acronym=${document.getElementById("acronym").value}`)
-    fetch(`/translate?acronym=${document.getElementById("acronym").value}`)
-        .then(response => response.json())
-        .then(data => document.getElementById("definitions").innerHTML = data["Definitions"].join('<br>'));
-}
-</script>
+<div id="definitions">
+    {% for acronym in acronyms %}
+    <li>{{ acronym["goon definition"] }}</li>
+    {% endfor %}
+</div>
