@@ -1,0 +1,17 @@
+<form>
+    <label>Acronym to be decoded:</label><br></br>
+    <input id="acronym" type="text"></input>
+  </form>
+  <button id="executeOrder66" onClick="myFunction()"> do it </button>
+  <div id="definitions"></div>
+  <script>
+    function myFunction() {
+        console.log(`/translate?acronym=${document.getElementById("acronym").value}`)
+        fetch(`/translate?acronym=${document.getElementById("acronym").value}`)
+            .then(response => response.json())
+            .then(data => document.getElementById("definitions").innerHTML = data["Definitions"].join('<br>'));
+    }
+  </script>
+  <!-- <script>
+    document.getElementById ("executeOrder66").addEventListener("click", myFunction, true);
+  </script> -->
