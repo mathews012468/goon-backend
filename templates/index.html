@@ -1,14 +1,27 @@
 <style>
     #container {
-        width: 90vw;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background-color: yellow;
+    }
+
+    h1 {
+        font-size: 4rem;
+    }
+
+    label {
+        font-size: 1.5rem;
     }
 
     form {
-        width: 100%;
-
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        align-items: center;
+        gap: 1rem;
     }
 
     #acronym-submit {
@@ -17,14 +30,18 @@
     }
 
     #acronym {
-        width: 90%;
-        max-width: 300px;
+        height: 2rem;
+        width: 100%;
+    }
+
+    #definitions {
+        font-size: 1.5rem;
     }
 </style>
 <div id="container">
     <h1>Goon Translator</h1>
     <form action="/translate">
-        <label>Acronym to be decoded:</label><br></br>
+        <label>Acronym to be decoded:</label>
         <div id="acronym-submit">
             <input id="acronym" name="acronym" type="text"></input>
             <input type="submit" value="Dechode"></input>
